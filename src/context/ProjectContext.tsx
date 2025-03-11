@@ -1,7 +1,6 @@
-
 import React, { createContext, useState, useContext, useEffect } from "react";
 import { useAuth } from "./AuthContext";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface Project {
   _id: string;
@@ -65,47 +64,44 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
   const [submissions, setSubmissions] = useState<Submission[]>([]);
   const [loading, setLoading] = useState(false);
 
-  // Mock data for projects
   const mockProjects: Project[] = [
     {
       _id: "project1",
       title: "Web Development Challenge",
       description: "Build a responsive web application using React",
-      deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
       isApplicationOpen: true,
-      applicationDeadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000), // 3 days from now
+      applicationDeadline: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
     },
     {
       _id: "project2",
       title: "Mobile App Innovation",
       description: "Create a mobile app concept for health tracking",
-      deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000), // 10 days from now
+      deadline: new Date(Date.now() + 10 * 24 * 60 * 60 * 1000),
       isApplicationOpen: true,
-      applicationDeadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days from now
+      applicationDeadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
     },
     {
       _id: "project3",
       title: "AI Image Generator",
       description: "Build an AI-powered image generation tool",
-      deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000), // 14 days from now
+      deadline: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
       isApplicationOpen: true,
-      applicationDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+      applicationDeadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
     },
   ];
 
-  // Mock data for user projects
   const mockUserProjects: UserProject[] = [
     {
       _id: "user-project-1",
       userId: "user123",
       projectId: "project1",
-      appliedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // Applied 2 days ago
-      deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000), // 5 days remaining
+      appliedAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
+      deadline: new Date(Date.now() + 5 * 24 * 60 * 60 * 1000),
       submissionId: undefined,
     },
   ];
 
-  // Mock data for submissions
   const mockSubmissions: Submission[] = [
     {
       _id: "submission1",
@@ -114,17 +110,14 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
       description: "I've created a health tracking app that focuses on mental wellness",
       files: ["file1.pdf", "screenshot1.jpg"],
       links: ["https://github.com/user/project", "https://demo-site.com"],
-      submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // Submitted 1 day ago
+      submittedAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000),
       status: "pending",
     },
   ];
 
-  // Fetch projects
   const fetchProjects = async () => {
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         setProjects(mockProjects);
         setLoading(false);
@@ -136,16 +129,12 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Fetch user projects
   const fetchUserProjects = async () => {
     if (!user) return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
-        // Filter user projects based on current user ID
         const userProjectsFiltered = mockUserProjects.filter(
           (up) => up.userId === user._id
         );
@@ -159,21 +148,18 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Apply to project
   const applyToProject = async (projectId: string) => {
     if (!user) return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         const newUserProject: UserProject = {
           _id: `user-project-${Date.now()}`,
           userId: user._id,
           projectId,
           appliedAt: new Date(),
-          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         };
         
         setUserProjects([...userProjects, newUserProject]);
@@ -187,7 +173,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Submit project
   const submitProject = async (
     projectId: string,
     data: Omit<Submission, "_id" | "userId" | "projectId" | "submittedAt" | "status">
@@ -196,8 +181,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         const newSubmission: Submission = {
           _id: `submission-${Date.now()}`,
@@ -210,7 +193,6 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
         
         setSubmissions([...submissions, newSubmission]);
         
-        // Update user project with submission ID
         const updatedUserProjects = userProjects.map((up) => {
           if (up.projectId === projectId && up.userId === user._id) {
             return { ...up, submissionId: newSubmission._id };
@@ -229,14 +211,11 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Fetch submissions
   const fetchSubmissions = async (projectId?: string) => {
     if (!user || user.role !== "admin") return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         if (projectId) {
           const filteredSubmissions = mockSubmissions.filter(
@@ -255,18 +234,15 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Approve submission
   const approveSubmission = async (submissionId: string, feedback?: string) => {
     if (!user || user.role !== "admin") return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         const updatedSubmissions = submissions.map((s) => {
           if (s._id === submissionId) {
-            return { ...s, status: "approved", feedback };
+            return { ...s, status: "approved" as const, feedback };
           }
           return s;
         });
@@ -282,18 +258,15 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Reject submission
   const rejectSubmission = async (submissionId: string, feedback: string) => {
     if (!user || user.role !== "admin") return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         const updatedSubmissions = submissions.map((s) => {
           if (s._id === submissionId) {
-            return { ...s, status: "rejected", feedback };
+            return { ...s, status: "rejected" as const, feedback };
           }
           return s;
         });
@@ -309,24 +282,20 @@ export const ProjectProvider: React.FC<{ children: React.ReactNode }> = ({ child
     }
   };
 
-  // Add user to project (admin function)
   const addUserToProject = async (userId: string, projectId: string) => {
     if (!user || user.role !== "admin") return;
     
     setLoading(true);
     try {
-      // Mock API call
-      // In a real app, you would make an API request here
       setTimeout(() => {
         const newUserProject: UserProject = {
           _id: `user-project-${Date.now()}`,
           userId,
           projectId,
           appliedAt: new Date(),
-          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000), // 7 days from now
+          deadline: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
         };
         
-        // Check if user already added to this project
         const alreadyExists = mockUserProjects.some(
           (up) => up.userId === userId && up.projectId === projectId
         );

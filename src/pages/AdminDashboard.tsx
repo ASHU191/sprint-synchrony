@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useAuth } from "@/context/AuthContext";
 import { useProject } from "@/context/ProjectContext";
@@ -11,9 +10,8 @@ import { Label } from "@/components/ui/label";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
-// Mock user data for admin
 const mockUsers = [
   { _id: "user123", name: "John Doe", email: "john@example.com", institute: "MIT", role: "user" },
   { _id: "user456", name: "Jane Smith", email: "jane@example.com", institute: "Stanford", role: "user" },
@@ -40,7 +38,6 @@ const AdminDashboard = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [feedbackText, setFeedbackText] = useState("");
   
-  // For viewing a specific submission
   const [viewingSubmission, setViewingSubmission] = useState<any>(null);
 
   useEffect(() => {
@@ -48,7 +45,6 @@ const AdminDashboard = () => {
     fetchSubmissions();
   }, []);
 
-  // Filter users based on search query
   const filteredUsers = users.filter(
     (u) =>
       u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -103,7 +99,6 @@ const AdminDashboard = () => {
     }
   };
 
-  // Redirect if not admin
   if (user?.role !== "admin") {
     return (
       <div className="min-h-screen flex flex-col bg-background">
@@ -149,7 +144,6 @@ const AdminDashboard = () => {
               <TabsTrigger value="add-user">Add User to Project</TabsTrigger>
             </TabsList>
             
-            {/* Projects Tab */}
             <TabsContent value="projects" className="animate-fade-in">
               {loading ? (
                 <div className="text-center py-12 text-foreground/70">
@@ -201,7 +195,6 @@ const AdminDashboard = () => {
               )}
             </TabsContent>
             
-            {/* Users Tab */}
             <TabsContent value="users" className="animate-fade-in">
               <div className="mb-6">
                 <Input
@@ -257,7 +250,6 @@ const AdminDashboard = () => {
               )}
             </TabsContent>
             
-            {/* Submissions Tab */}
             <TabsContent value="submissions" className="animate-fade-in">
               {viewingSubmission ? (
                 <div className="animate-fade-in">
@@ -423,7 +415,6 @@ const AdminDashboard = () => {
               )}
             </TabsContent>
             
-            {/* Add User to Project Tab */}
             <TabsContent value="add-user" className="animate-fade-in">
               <Card className="glass-card max-w-2xl mx-auto">
                 <CardHeader>

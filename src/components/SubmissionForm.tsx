@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useProject } from "@/context/ProjectContext";
 import { Button } from "@/components/ui/button";
@@ -6,7 +5,7 @@ import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle }
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 interface SubmissionFormProps {
   projectId: string;
@@ -39,8 +38,6 @@ const SubmissionForm: React.FC<SubmissionFormProps> = ({ projectId, onSubmitSucc
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      // This is a mock implementation - in a real app, you would upload files to a server
-      // and get back the URLs or file IDs
       const newFiles = Array.from(e.target.files).map(file => file.name);
       setFiles([...files, ...newFiles]);
       toast.success(`${newFiles.length} file(s) selected`);
@@ -55,7 +52,6 @@ const SubmissionForm: React.FC<SubmissionFormProps> = ({ projectId, onSubmitSucc
       return;
     }
     
-    // Filter out empty links
     const validLinks = links.filter(link => link.trim() !== "");
     
     try {
@@ -65,7 +61,6 @@ const SubmissionForm: React.FC<SubmissionFormProps> = ({ projectId, onSubmitSucc
         files,
       });
       
-      // Reset form
       setDescription("");
       setLinks([""]);
       setFiles([]);

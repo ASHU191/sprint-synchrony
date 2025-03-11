@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "@/context/AuthContext";
@@ -8,7 +7,7 @@ import CountdownTimer from "@/components/CountdownTimer";
 import SubmissionForm from "@/components/SubmissionForm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { toast } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const ProjectWorkspace = () => {
   const { projectId } = useParams<{ projectId: string }>();
